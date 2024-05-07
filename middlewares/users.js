@@ -53,10 +53,52 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+// Check username, email and password is empty
+const checkEmptyNameAndEmailAndPassword = async (req, res, next) => {
+  if (!req.body.username || !req.body.email || !req.body.password) {
+    res.setHeader("Content-Type", "application/json");
+    res
+      .status(400)
+      .send(JSON.stringify({ message: "Enter your name, email and password" }));
+  } else {
+    next();
+  }
+};
+
+// Check name or email is empty by update
+const checkEmptyNameAndEmail = async (req, res, next) => {
+  if (!req.body.username || !req.body.email) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Введите имя и email" }));
+  } else {
+    next();
+  }
+};
+
+// Check email user
+const checkIsUserExists = async (req, res, next) => {
+  const isInArray = req.usersArray.find((user) => {
+    return req.body.email === user.email;
+  });
+  if (isInArray) {
+    res.setHeader("Content-Type", "application/json");
+    res
+      .status(400)
+      .send(
+        JSON.stringify({ message: "A user with this email already exists" })
+      );
+  } else {
+    next();
+  }
+};
+
 module.exports = {
   findAllUsers,
   createUser,
   findUserById,
   updateUser,
   deleteUser,
+  checkEmptyNameAndEmailAndPassword,
+  checkEmptyNameAndEmail,
+  checkIsUserExists,
 };
