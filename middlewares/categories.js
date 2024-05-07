@@ -58,10 +58,42 @@ const deleteCategory = async (req, res, next) => {
   }
 };
 
+// Check is category
+const checkIsCategoryExists = async (req, res, next) => {
+  const isInArray = req.categoriesArray.find((category) => {
+    return req.body.name === category.name;
+  });
+  // If found a match
+  if (isInArray) {
+    res.setHeader("Content-Type", "application/json");
+    res.statusCode(400).send(
+      JSON.stringify({
+        message: "A category with that name already exists",
+      })
+    );
+  } else {
+    next();
+  }
+};
+
+// Check input name is empty
+const checkEmptyName = async (req, res, next) => {
+  if (!req.body.name) {
+    res.setHeader("Content-Type", "application/json");
+    res
+      .statusCode(400)
+      .send(JSON.stringify({ message: "Enter the name of the category" }));
+  } else {
+    next();
+  }
+};
+
 module.exports = {
   findAllCategories,
   createCategory,
   findCategoryById,
   updateCategory,
   deleteCategory,
+  checkIsCategoryExists,
+  checkEmptyName,
 };
