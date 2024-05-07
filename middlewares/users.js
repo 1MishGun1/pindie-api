@@ -21,7 +21,7 @@ const createUser = async (req, res, next) => {
   }
 };
 
-// Search game by id
+// Search user by id
 const findUserById = async (req, res, next) => {
   try {
     req.user = await users.findById(req.params.id);
@@ -42,4 +42,21 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { findAllUsers, createUser, findUserById, updateUser };
+// Delete user by id
+const deleteUser = async (req, res, next) => {
+  try {
+    res.user = await users.findByIdAndDelete(req.params.id);
+    next();
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res.statusCode(400).send(JSON.stringify({ message: "Error delete user" }));
+  }
+};
+
+module.exports = {
+  findAllUsers,
+  createUser,
+  findUserById,
+  updateUser,
+  deleteUser,
+};
