@@ -15,4 +15,15 @@ const sendGameById = (req, res) => {
   res.end(JSON.stringify(req.game));
 };
 
-module.exports = { sendAllGames, sendGameCreated, sendGameById };
+// Function show result update game
+const sendGameUpdated = (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.status(200).send(JSON.stringify({ message: "Update game" }));
+};
+
+module.exports = {
+  sendAllGames,
+  sendGameCreated,
+  sendGameById,
+  sendGameUpdated,
+};
