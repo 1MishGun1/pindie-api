@@ -32,4 +32,22 @@ const findCategoryById = async (req, res, next) => {
   }
 };
 
-module.exports = { findAllCategories, createCategory, findCategoryById };
+// Update category data
+const updateCategory = async (req, res, next) => {
+  try {
+    req.category = await categories.findByIdAndUpdate(req.params.id, req.body);
+    next();
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res
+      .statusCode(400)
+      .send(JSON.stringify({ message: "Error update category" }));
+  }
+};
+
+module.exports = {
+  findAllCategories,
+  createCategory,
+  findCategoryById,
+  updateCategory,
+};
