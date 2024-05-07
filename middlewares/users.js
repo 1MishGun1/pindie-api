@@ -25,9 +25,21 @@ const createUser = async (req, res, next) => {
 const findUserById = async (req, res, next) => {
   try {
     req.user = await users.findById(req.params.id);
+    next();
   } catch (error) {
     res.statusCode(404).send(JSON.stringify({ message: "User not found" }));
   }
 };
 
-module.exports = { findAllUsers, createUser, findUserById };
+// Update user data
+const updateUser = async (req, res, next) => {
+  try {
+    req.user = await users.findByIdAndUpdate(req.params.id, req.body);
+    next();
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res.statusCode(400).send(JSON.stringify({ message: "Error update user" }));
+  }
+};
+
+module.exports = { findAllUsers, createUser, findUserById, updateUser };
