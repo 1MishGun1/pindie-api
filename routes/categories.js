@@ -5,12 +5,14 @@ const {
   createCategory,
   findCategoryById,
   updateCategory,
+  deleteCategory,
 } = require("../middlewares/categories");
 const {
   sendAllCategories,
   sendCategoryCreated,
   sendCategoryById,
   sendCategoryUpdated,
+  sendCategoryDeleted,
 } = require("../controllers/categories");
 
 categoriesRouter.get("/categories", findAllCategories, sendAllCategories);
@@ -27,5 +29,6 @@ categoriesRouter.put(
   updateCategory,
   sendCategoryUpdated
 );
+categoriesRouter.delete("/categories/:id", deleteCategory, sendCategoryDeleted);
 
 module.exports = categoriesRouter;
