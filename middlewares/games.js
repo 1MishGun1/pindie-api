@@ -87,6 +87,8 @@ const checkIfCategoriesAvaliable = async (req, res, next) => {
     res
       .statusCode(400)
       .send(JSON.stringify({ message: "Please, at least one category" }));
+  } else {
+    next();
   }
 };
 
@@ -135,5 +137,5 @@ module.exports = {
   checkEmptyFields,
   checkIfCategoriesAvaliable,
   checkIfUsersAreSafe,
-  checkIsGameExists
+  checkIsGameExists,
 };
