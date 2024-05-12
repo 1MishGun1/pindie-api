@@ -1,8 +1,7 @@
 const users = require("../models/user");
 
 const findAllUsers = async (req, res, next) => {
-  const result = (req.usersArray = await users.find({}));
-  req.usersArray = result;
+  req.usersArray = await users.find({});
   next();
 };
 
