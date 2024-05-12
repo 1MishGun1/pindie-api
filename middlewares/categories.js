@@ -1,8 +1,7 @@
 const categories = require("../models/category");
 
 const findAllCategories = async (req, res, next) => {
-  const result = (req.categoriesArray = await categories.find({}));
-  req.categoriesArray = result;
+  req.categoriesArray = await categories.find({});
   next();
 };
 
@@ -15,9 +14,7 @@ const createCategory = async (req, res, next) => {
     next();
   } catch (error) {
     res.setHeader("Content-Type", "application/json");
-    res
-      .statusCode(400)
-      .send(JSON.stringify({ message: "Error create new category" }));
+    res.status(400).send({ message: "Error create new category" });
   }
 };
 
