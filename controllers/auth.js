@@ -31,13 +31,17 @@ const sendIndex = (req, res) => {
   if (req.cookies.jwt) {
     try {
       jwt.verify(req.cookies.jwt, "some-secret-key");
-      res.sendFile(path.join(__dirname, "../public/admin/dashboard.html"));
+      return res.redirect("/admin/dashboard");
     } catch (error) {
-      res.sendFile(path.join(__dirname, "../public/index.html"));
+      return res.sendFile(path.join(__dirname, "../public/index.html"));
     }
-  } else {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
   }
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 };
 
-module.exports = { login, sendIndex };
+// Function send dashboard.html
+const sendDashboard = (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/admin/dashboard.html"));
+};
+
+module.exports = { login, sendIndex, sendDashboard };
