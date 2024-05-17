@@ -7,9 +7,10 @@ const {
   updateGame,
   deleteGame,
   checkEmptyFields,
-  checkIfCategoriesAvaliable,
+  checkIfCategoriesAvailable,
   checkIfUsersAreSafe,
   checkIsGameExists,
+  checkIsVoteRequest,
 } = require("../middlewares/games");
 
 const {
@@ -28,7 +29,7 @@ gamesRouter.post(
   "/games",
   findAllGames,
   checkIsGameExists,
-  checkIfCategoriesAvaliable,
+  checkIfCategoriesAvailable,
   checkEmptyFields,
   checkAuth,
   createGame,
@@ -40,8 +41,9 @@ gamesRouter.get("/games/:id", findGameById, sendGameById);
 gamesRouter.put(
   "/games/:id",
   findGameById,
+  checkIsVoteRequest,
   checkIfUsersAreSafe,
-  checkIfCategoriesAvaliable,
+  checkIfCategoriesAvailable,
   checkEmptyFields,
   checkAuth,
   updateGame,
