@@ -100,7 +100,7 @@ const checkIfCategoriesAvailable = async (req, res, next) => {
   if (!req.body.categories || req.body.categories.length === 0) {
     res.setHeader("Content-Type", "application/json");
     res
-      .statusCode(400)
+      .status(400)
       .send(JSON.stringify({ message: "Please, at least one category" }));
   } else {
     next();
@@ -145,7 +145,7 @@ const checkIsGameExists = async (req, res, next) => {
 
 const checkIsVoteRequest = async (req, res, next) => {
   if (Object.keys(req.body).length === 1 && req.body.users) {
-    res.isVoteRequest = true;
+    req.isVoteRequest = true;
   }
   next();
 };
