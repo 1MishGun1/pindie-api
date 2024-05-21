@@ -1,6 +1,13 @@
 const games = require("../models/game");
 
 const findAllGames = async (req, res, next) => {
+  if (req.query["categories.name"]) {
+    req.gamesArray = await games.findGameByCategory(
+      req.query["categories.name"]
+    );
+    next();
+    return;
+  }
   const result = await games.find({}).populate("categories").populate({
     path: "users",
     select: "-password",
@@ -66,6 +73,10 @@ const deleteGame = async (req, res, next) => {
 
 // Check all inputs
 const checkEmptyFields = async (req, res, next) => {
+  if (req.isVoteRequest) {
+    next();
+    return;
+  }
   if (
     !req.body.title ||
     !req.body.description ||
@@ -81,11 +92,15 @@ const checkEmptyFields = async (req, res, next) => {
 };
 
 // Check categories by id
-const checkIfCategoriesAvaliable = async (req, res, next) => {
+const checkIfCategoriesAvailable = async (req, res, next) => {
+  if (req.isVoteRequest) {
+    next();
+    return;
+  }
   if (!req.body.categories || req.body.categories.length === 0) {
     res.setHeader("Content-Type", "application/json");
     res
-      .statusCode(400)
+      .status(400)
       .send(JSON.stringify({ message: "Please, at least one category" }));
   } else {
     next();
@@ -128,6 +143,13 @@ const checkIsGameExists = async (req, res, next) => {
   }
 };
 
+const checkIsVoteRequest = async (req, res, next) => {
+  if (Object.keys(req.body).length === 1 && req.body.users) {
+    req.isVoteRequest = true;
+  }
+  next();
+};
+
 module.exports = {
   findAllGames,
   createGame,
@@ -135,7 +157,8 @@ module.exports = {
   updateGame,
   deleteGame,
   checkEmptyFields,
-  checkIfCategoriesAvaliable,
+  checkIfCategoriesAvailable,
   checkIfUsersAreSafe,
   checkIsGameExists,
+  checkIsVoteRequest,
 };
