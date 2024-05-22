@@ -6,7 +6,7 @@ const allowedCors = [
   "https://pindie-frontend-kudrov.nomoredomainswork.ru",
 ];
 
-const cors = (req, res, next) => {
+function cors(req, res, next) {
   const { origin } = req.headers;
 
   if (allowedCors.includes(origin)) {
@@ -18,6 +18,6 @@ const cors = (req, res, next) => {
     "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization"
   );
   next();
-};
+}
 
 module.exports = cors;
