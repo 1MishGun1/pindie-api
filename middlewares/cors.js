@@ -3,10 +3,10 @@ const allowedCors = [
   "https://students-projects.ru",
   "http://localhost:3000",
   "http://localhost:3001",
-  "https://pindie-frontend-kudrov.nomoredomainswork.ru/",
-  "http://pindie-frontend-kudrov.nomoredomainswork.ru/",
-  "https://pindie-backend-kudrov.nomoredomainswork.ru/",
-  "http://pindie-backend-kudrov.nomoredomainswork.ru/",
+  "https://pindie-frontend-kudrov.nomoredomainswork.ru",
+  "http://pindie-frontend-kudrov.nomoredomainswork.ru",
+  "https://pindie-backend-kudrov.nomoredomainswork.ru",
+  "http://pindie-backend-kudrov.nomoredomainswork.ru",
 ];
 
 const cors = (req, res, next) => {
