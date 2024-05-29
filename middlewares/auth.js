@@ -1,16 +1,18 @@
 const jwt = require("jsonwebtoken");
+const users = require("../models/user");
 
-const checkAuth = (req, res, next) => {
+const checkAuth = async (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization || !authorization.startsWith("Bearer ")) {
-    return res.status(401).send("Please log in");
-  }
+  // if (!authorization || !authorization.startsWith("Bearer ")) {
+  //   return res.status(401).send("Please log in");
+  // }
 
   const token = authorization.replace("Bearer ", "");
 
   try {
-    req.user = jwt.verify(token, "some-secret-key");
+    const jwtData = jwt.verify(token, "some-secret-key");
+    req.user = await users.findById(jwtData._id, { password: 0 });
   } catch (error) {
     return res.status(401).send("Please log in");
   }
